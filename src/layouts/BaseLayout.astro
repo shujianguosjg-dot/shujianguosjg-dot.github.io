@@ -1,0 +1,22 @@
+---
+import '../styles/global.css';
+const {title='Jianguo Shu | Computer Vision & Embodied AI',description='Research portfolio about stereo vision, 3D reconstruction and embodied AI.',active='home'}=Astro.props;
+const nav=[['home','Home','/'],['projects','Projects','/projects/'],['cv','About / CV','/cv/'],['blog','Research Notes','/blog/']];
+---
+<!doctype html><html lang="en" data-theme="light"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content={description}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/><title>{title}</title></head>
+<body class="bg-base-100 text-base-content">
+<div class="drawer lg:drawer-open"><input id="site-drawer" type="checkbox" class="drawer-toggle"/>
+<div class="drawer-content flex flex-col min-h-screen">
+<header class="lg:hidden sticky top-0 z-30 h-16 px-5 bg-base-100/95 backdrop-blur flex items-center gap-4 shadow-sm">
+<label for="site-drawer" class="btn btn-square btn-ghost" aria-label="Open navigation">☰</label><a href="/" class="font-bold">Jianguo Shu</a></header>
+<main class="w-full max-w-5xl mx-auto flex-grow px-6 sm:px-10 py-12"><slot/></main>
+<footer class="text-center text-sm opacity-70 py-10">© {new Date().getFullYear()} Jianguo Shu · Built with <a href="https://github.com/manuelernestog/astrofy" class="link" target="_blank" rel="noopener noreferrer">Astrofy</a> & Astro</footer>
+</div><div class="drawer-side z-40"><label for="site-drawer" class="drawer-overlay" aria-label="Close navigation"></label>
+<aside class="w-72 min-h-full bg-base-200 px-5 pt-12 flex flex-col">
+<a href="/" class="flex flex-col items-center gap-3 mb-9"><div class="w-24 h-24 rounded-3xl bg-neutral text-neutral-content grid place-items-center text-3xl font-bold">JS</div><span class="text-xl font-bold">Jianguo Shu</span><span class="text-xs opacity-70">Computer Vision · 3D · VLA</span></a>
+<ul class="menu grow gap-1">{nav.map(([id,label,href])=><li><a class:list={['text-base py-3 rounded-xl',{'active':active===id}]} href={href}>{label}</a></li>)}</ul>
+<div class="pb-8"><a class="btn btn-outline btn-sm w-full" href="https://github.com/shujianguosjg-dot" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+</aside></div></div></body></html>
