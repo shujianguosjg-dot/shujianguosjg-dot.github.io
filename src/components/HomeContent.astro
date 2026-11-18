@@ -1,0 +1,50 @@
+---
+import PortfolioLayout from './PortfolioLayout.astro';
+import { portfolio, githubURL, siteEmail, type Locale } from '../data/portfolio';
+interface Props {lang: Locale;}
+const { lang } = Astro.props;
+const t = portfolio[lang];
+const href = (path: string) => (lang === 'en' ? '/en' : '') + path;
+const featured = t.projects.slice(0,3);
+---
+<PortfolioLayout lang={lang} active="home">
+<section class="pb-14">
+  <p class="section-label mb-5">{t.eyebrow}</p>
+  <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">{lang === 'zh' ? '你好，我是' : "Hi, I'm"} <span class="text-primary">{t.name}</span><span class="text-base-content">.</span></h1>
+  <h2 class="text-xl md:text-2xl font-semibold mt-7">{t.field}</h2>
+  <p class="text-lg leading-8 text-base-content/75 mt-7 max-w-3xl">{t.intro}</p>
+  <p class="text-sm mt-5 text-base-content/60">{t.availability}</p>
+  <div class="mt-8 flex flex-wrap gap-3">
+    <a class="btn btn-primary" href={href('/projects/')}>{t.primaryCTA} ↗</a>
+    <a class="btn btn-outline" href={href('/cv/')}>{t.secondaryCTA}</a>
+    <a class="btn btn-ghost" href={'mailto:' + siteEmail}>{t.contact} ↗</a>
+  </div>
+</section>
+<section class="border-y border-base-300 py-9 my-4">
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+    {t.highlights.map(s => <div><div class="text-2xl sm:text-3xl font-bold">{s.value}</div><p class="text-xs sm:text-sm text-base-content/60 mt-2 leading-6">{s.label}</p></div>)}
+  </div>
+</section>
+<section class="pt-12">
+  <div class="flex flex-wrap justify-between items-end gap-4 mb-7">
+    <div><p class="section-label">{t.sectionResearch}</p><h2 class="text-3xl font-bold mt-2">{t.research}</h2></div>
+    <a href={href('/projects/')} class="link link-primary">{t.allProjects} →</a>
+  </div>
+  <p class="leading-7 text-base-content/70 mb-7 max-w-3xl">{t.researchDesc}</p>
+  <div class="grid md:grid-cols-2 gap-5">
+    {featured.map(p => <a class="research-card block group" href={href('/projects/' + p.slug + '/')}>
+      <p class="section-label mb-3">{p.category}</p>
+      <h3 class="text-xl md:text-2xl font-bold group-hover:text-primary leading-snug">{p.name} ↗</h3>
+      <p class="text-base-content/70 leading-7 mt-4">{p.short}</p>
+      <div class="mt-5 flex flex-wrap gap-2">{p.tags.map(tag => <span class="badge badge-outline badge-sm">{tag}</span>)}</div>
+    </a>)}
+  </div>
+</section>
+<section class="mt-14 bg-base-200 p-7 sm:p-9 rounded-2xl">
+  <p class="section-label">{t.sectionEducation}</p>
+  <h2 class="text-2xl font-bold mt-3">{t.resumeStatus}</h2>
+  <p class="text-base-content/70 mt-4 leading-7">{t.education[0].school} · {t.education[0].degree} · {t.education[0].date}</p>
+  <a href={href('/cv/')} class="btn btn-outline btn-sm mt-6">{t.secondaryCTA} ↗</a>
+</section>
+<p class="text-xs text-base-content/55 mt-6">{t.latest} · {t.noMedia}</p>
+</PortfolioLayout>

@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import { portfolio, githubURL, type Locale } from '../data/portfolio';
+interface Props {lang?: Locale; active?: string; title?: string; description?: string;}
+const { lang = 'zh', active = 'home', title, description } = Astro.props;
+const t = portfolio[lang];
+const fullTitle = title || (lang === 'zh' ? '舒建国 | 计算机视觉与三维重建' : 'Jianguo Shu | Computer Vision & 3D Reconstruction');
+const fullDescription = description || t.intro;
+const current = Astro.url.pathname;
+const withoutLocale = current === '/en' ? '/' : current.startsWith('/en/') ? current.slice(3) : current;
+const zhPath = withoutLocale.endsWith('/') ? withoutLocale : withoutLocale + '/';
+const enPath = '/en' + (zhPath === '/' ? '/' : zhPath);
+const pageUrl = (path: string) => (lang === 'en' ? '/en' : '') + path;
+const canonical = new URL(lang === 'zh' ? zhPath : enPath, Astro.site || new URL('https://shujianguosjg-dot.github.io'));
+---
+<!doctype html>
+<html lang={lang === 'zh' ? 'zh-CN' : 'en'} data-theme="light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content={fullDescription}/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content={fullTitle}/>
+  <meta property="og:description" content={fullDescription}/>
+  <meta property="og:url" content={canonical.href}/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="canonical" href={canonical.href}/>
+  <link rel="alternate" hreflang="zh-CN" href={new URL(zhPath, canonical).href}/>
+  <link rel="alternate" hreflang="en" href={new URL(enPath, canonical).href}/>
+  <link rel="alternate" hreflang="x-default" href={new URL(zhPath, canonical).href}/>
+  <title>{fullTitle}</title>
+</head>
+<body class="bg-base-100 text-base-content">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-base-100 focus:p-3">{lang === 'zh' ? '跳转到正文' : 'Skip to content'}</a>
+  <div class="drawer lg:drawer-open">
+    <input id="site-drawer" type="checkbox" class="drawer-toggle"/>
+    <div class="drawer-content flex flex-col min-h-screen">
+      <header class="lg:hidden sticky top-0 z-30 h-16 px-4 sm:px-6 bg-base-100/95 backdrop-blur flex items-center justify-between gap-3 border-b border-base-300">
+        <label for="site-drawer" class="btn btn-square btn-ghost" aria-label={lang === 'zh' ? '打开导航' : 'Open navigation'}>☰</label>
+        <a href={pageUrl('/')} class="font-bold truncate">{t.name}</a>
+        <a class="btn btn-sm btn-outline min-w-16" aria-label={lang === 'zh' ? 'Switch to English' : '切换为中文'} href={lang === 'zh' ? enPath : zhPath}>{lang === 'zh' ? 'EN' : '中文'}</a>
+      </header>
+      <main id="main-content" class="w-full max-w-5xl mx-auto flex-grow px-5 sm:px-10 py-10 md:py-14"><slot/></main>
+      <footer class="text-center text-sm opacity-70 py-9 px-5">
+        © {new Date().getFullYear()} {t.name} · <a href="https://github.com/manuelernestog/astrofy" class="link" target="_blank" rel="noopener noreferrer">Astrofy</a> / Astro
+      </footer>
+    </div>
+    <div class="drawer-side z-40">
+      <label for="site-drawer" class="drawer-overlay" aria-label="Close menu"></label>
+      <aside class="w-72 min-h-full bg-base-200 px-5 pt-9 flex flex-col">
+        <a href={pageUrl('/')} class="flex flex-col items-center gap-3 mb-8 text-center">
+          <div class="w-20 h-20 rounded-3xl bg-neutral text-neutral-content grid place-items-center text-3xl font-bold" aria-hidden="true">JS</div>
+          <span class="text-xl font-bold">{t.name}</span>
+          <span class="text-xs opacity-70">Computer Vision · 3D · Robotics</span>
+        </a>
+        <nav aria-label={lang === 'zh' ? '主导航' : 'Main navigation'}>
+          <ul class="menu gap-1">{t.nav.map(link => <li><a class:list={['text-base py-3 rounded-xl',{'active': active === link.id}]} href={pageUrl(link.path)} aria-current={active === link.id ? 'page' : undefined}>{link.label}</a></li>)}</ul>
+        </nav>
+        <div class="mt-auto pb-8 pt-5">
+          <div class="flex p-1 rounded-full bg-base-100 border border-base-300 mb-5" aria-label={lang === 'zh' ? '语言' : 'Language'}>
+            <a href={zhPath} aria-current={lang === 'zh' ? 'page' : undefined} class:list={['flex-1 text-center py-2 text-sm font-semibold rounded-full',{'bg-neutral text-neutral-content': lang === 'zh'}]}>中文</a>
+            <a href={enPath} aria-current={lang === 'en' ? 'page' : undefined} class:list={['flex-1 text-center py-2 text-sm font-semibold rounded-full',{'bg-neutral text-neutral-content': lang === 'en'}]}>English</a>
+          </div>
+          <a class="btn btn-outline btn-sm w-full" href={githubURL} target="_blank" rel="noopener noreferrer">{t.github} ↗</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>

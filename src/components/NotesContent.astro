@@ -1,0 +1,11 @@
+---
+import PortfolioLayout from './PortfolioLayout.astro';
+import { portfolio, type Locale } from '../data/portfolio';
+interface Props {lang: Locale;}
+const { lang } = Astro.props;
+const t = portfolio[lang];
+---
+<PortfolioLayout lang={lang} active="blog" title={t.noteTitle + ' | ' + t.name}>
+<p class="section-label">Research Notes</p><h1 class="text-4xl md:text-5xl font-bold mt-3">{t.noteTitle}</h1>
+<div class="research-card mt-9"><h2 class="text-xl font-semibold">{lang === 'zh' ? '笔记整理中' : 'Notes are being curated'}</h2><p class="text-base-content/70 leading-8 mt-4">{t.noteDesc}</p></div>
+</PortfolioLayout>

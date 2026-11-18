@@ -1,0 +1,22 @@
+---
+import PortfolioLayout from './PortfolioLayout.astro';
+import { portfolio, type Locale } from '../data/portfolio';
+interface Props {lang: Locale;}
+const { lang } = Astro.props;
+const t = portfolio[lang];
+const href = (path: string) => (lang === 'en' ? '/en' : '') + path;
+---
+<PortfolioLayout lang={lang} active="projects" title={t.sectionResearch + ' | ' + t.name}>
+<p class="section-label">Research / Engineering</p>
+<h1 class="text-4xl md:text-5xl font-bold mt-3">{t.sectionResearch}</h1>
+<p class="text-lg leading-8 text-base-content/70 mt-6 mb-9">{t.researchDesc}</p>
+<div class="grid md:grid-cols-2 gap-5">
+{t.projects.map((p, i) => <a href={href('/projects/' + p.slug + '/')} class="research-card block group">
+  <div class="flex items-center justify-between gap-3"><p class="section-label">{p.category}</p><span class="text-sm opacity-50">{String(i+1).padStart(2,'0')}</span></div>
+  <h2 class="text-xl md:text-2xl font-bold mt-4 group-hover:text-primary leading-snug">{p.name} ↗</h2>
+  <p class="leading-7 text-base-content/70 mt-4">{p.short}</p>
+  <div class="text-xs opacity-60 mt-4">{p.period}</div>
+  <div class="flex flex-wrap gap-2 mt-5">{p.tags.map(tag => <span class="badge badge-outline badge-sm">{tag}</span>)}</div>
+</a>)}
+</div><p class="mt-9 text-sm text-base-content/60">{t.noMedia}</p>
+</PortfolioLayout>

@@ -1,0 +1,28 @@
+---
+import PortfolioLayout from './PortfolioLayout.astro';
+import { portfolio, type Locale } from '../data/portfolio';
+interface Props {lang: Locale;slug: string;}
+const { lang, slug } = Astro.props;
+const t = portfolio[lang];
+const project = t.projects.find(p => p.slug === slug);
+const href = (path: string) => (lang === 'en' ? '/en' : '') + path;
+---
+<PortfolioLayout lang={lang} active="projects" title={(project?.name || t.sectionResearch) + ' | ' + t.name} description={project?.short}>
+{project ? <>
+  <a href={href('/projects/')} class="link link-primary text-sm">← {t.projectLabels.back}</a>
+  <p class="section-label mt-9">{project.category}</p>
+  <h1 class="text-3xl md:text-5xl font-bold leading-tight mt-3">{project.name}</h1>
+  <p class="text-lg text-base-content/75 leading-8 mt-7">{project.short}</p>
+  <div class="flex flex-wrap gap-2 mt-6">{project.tags.map(tag => <span class="badge badge-outline">{tag}</span>)}</div>
+  <div class="grid sm:grid-cols-2 gap-4 mt-10">
+    <div class="bg-base-200 rounded-xl p-5"><p class="section-label">{t.projectLabels.role}</p><p class="leading-7 mt-3 font-medium">{project.role}</p></div>
+    <div class="bg-base-200 rounded-xl p-5"><p class="section-label">{t.projectLabels.period}</p><p class="leading-7 mt-3 font-medium">{project.period}</p></div>
+  </div>
+  <section class="mt-12"><h2 class="text-2xl font-bold">{t.projectLabels.details}</h2>
+    <ol class="space-y-5 mt-6 list-decimal pl-6 leading-8 text-base-content/85">{project.bullets.map(b => <li class="pl-1">{b}</li>)}</ol>
+  </section>
+  {'note' in project && <section class="mt-11 border-l-4 border-base-300 bg-base-200/70 px-5 py-5"><h2 class="font-semibold">{t.projectLabels.status}</h2><p class="leading-7 mt-2">{project.note}</p></section>}
+  {'external' in project && <div class="mt-9"><a href={project.external} target="_blank" rel="noopener noreferrer" class="link link-primary">{project.externalLabel} ↗</a></div>}
+  <p class="text-xs opacity-60 mt-12">{t.noMedia}</p>
+</> : <div><h1 class="text-3xl font-bold">404</h1><a href={href('/projects/')} class="link">{t.projectLabels.back}</a></div>}
+</PortfolioLayout>
