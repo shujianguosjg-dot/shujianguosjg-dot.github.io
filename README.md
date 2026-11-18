@@ -39,3 +39,10 @@ Push to `main` and the workflow in `.github/workflows/deploy.yml` deploys to Git
 ## Attribution
 
 Based on the open-source Astrofy template design by Manuel Ernesto Garcia (MIT license). See [LICENSE](LICENSE).
+
+## NBS + VLA media publishing
+
+The homepage and both project pages now support bilingual, evidence-backed NBS and LIBERO visuals.
+The optional `site-media.zip` is a **separately reviewed** 5 MB package containing 12 WebP exports and 2 MP4 clips. Upload the file *unchanged* to the **repository root**; the deployment workflow verifies its exact SHA-256 and extracts only vetted assets to `public/media/` before building the static site. Missing media will show neutral placeholders instead of broken images.
+
+**Important**: `ETH3D` is CC BY-NC-SA 4.0. For promotional or commercial portfolio use, ask for permission or exclude ETH3D figures/video. Middlebury 2021 asks for scholarly citation; LIBERO rollouts are simulated, not real robots. No evidence figure has been altered by generative AI.

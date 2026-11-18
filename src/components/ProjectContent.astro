@@ -1,5 +1,6 @@
 ---
 import PortfolioLayout from './PortfolioLayout.astro';
+import ResearchEvidence from './ResearchEvidence.astro';
 import { portfolio, type Locale } from '../data/portfolio';
 interface Props {lang: Locale;slug: string;}
 const { lang, slug } = Astro.props;
@@ -21,6 +22,7 @@ const href = (path: string) => (lang === 'en' ? '/en' : '') + path;
   <section class="mt-12"><h2 class="text-2xl font-bold">{t.projectLabels.details}</h2>
     <ol class="space-y-5 mt-6 list-decimal pl-6 leading-8 text-base-content/85">{project.bullets.map(b => <li class="pl-1">{b}</li>)}</ol>
   </section>
+  <ResearchEvidence lang={lang} slug={slug} />
   {'note' in project && <section class="mt-11 border-l-4 border-base-300 bg-base-200/70 px-5 py-5"><h2 class="font-semibold">{t.projectLabels.status}</h2><p class="leading-7 mt-2">{project.note}</p></section>}
   {'external' in project && <div class="mt-9"><a href={project.external} target="_blank" rel="noopener noreferrer" class="link link-primary">{project.externalLabel} ↗</a></div>}
   <p class="text-xs opacity-60 mt-12">{t.noMedia}</p>

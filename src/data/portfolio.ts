@@ -12,7 +12,7 @@ zh: {
   highlights: [{value:'3 / 77',label:'四川大学综合排名 · TOP 4%'},{value:'16.56%',label:'NBS 同分辨率适配：加权 dev EPE 降幅'},{value:'4 相机',label:'真实异构 Rig 端到端重建'},{value:'1,383',label:'自动化测试 · 0 failed'}],
   nav: [{id:'home',label:'首页',path:'/'},{id:'projects',label:'核心项目',path:'/projects/'},{id:'cv',label:'简历与经历',path:'/cv/'},{id:'blog',label:'研究笔记',path:'/blog/'}],
   readMore:'查看详情', allProjects:'全部项目', sectionResearch:'核心项目经历', sectionIntern:'实习经历', sectionEducation:'教育背景', sectionSkills:'专业技能', sectionPapers:'论文（投稿中）', sectionHonors:'竞赛与荣誉',
-  contact:'联系邮箱', github:'GitHub 主页', noMedia:'目前暂不展示图片和视频；后续将补充经过审核的实验可视化与演示。',
+  contact:'联系邮箱', github:'GitHub 主页', noMedia:'科研图片和视频以可追溯的原始实验为依据，展示时保留实验条件。',
   cvIntro:'以下内容由最新求职简历拆解整理，保留教育时间、项目角色、实验条件、论文投稿状态等关键信息。出于隐私考虑，公开网页未展示手机号和微信号。',
   resumeStatus:'2027 届本科生 · 已推免硕士（尚未入学）',
   education:[
@@ -29,6 +29,12 @@ zh: {
     {label:'机器人与感知',items:['RGB-D / YOLO11','ROS / TF','EKF','覆盖路径规划']}
   ],
   projects:[
+    {slug:'vla',name:'SmolVLA 示范子集选择与小样本策略微调研究',short:'在 LIBERO 仿真基准研究 10% 示范数据预算下的选择策略：构建选择、训练、固定评测和审计流程，并分析未达到统计显著性的负结果。',category:'具身智能 · LIBERO 仿真',period:'2026 年研究实验',role:'本人实现示范筛选、评测协议、结果审计和机制分析；基础策略使用上游 LeRobot SmolVLA',tags:['SmolVLA','LIBERO Simulation','DINOv2','Data Selection'],bullets:[
+      '研究从 1,693 回合、273,465 帧示范池中选择 10% 数据（168 回合）进行策略微调；比较 random、DINOv2-state 与 DINOv2-k-center 选择方法。训练使用上游 SmolVLA（450M 总参数、99.9M 可训练），统一 10k 步、单卡 48GB 条件。',
+      '建立固定评测协议、run registry、结果校验与配对比较流程，并将子集选择实现与上游模型微调清晰区分；action-medoid 选择器仅生成子集，尚未完成相应训练。',
+      'mini(100) 筛选协议中，random(seed 1000) 成功率 66.0%，DINOv2-k-center(seed 1000) 为 53.0%；每臂 100 回合、共 5 个实验臂；10 组配对比较经 Holm 校正后均不显著，不能据此宣称优劣。',
+      '机制分析覆盖 40 个任务：k-center 筛出的示范在视觉空间距离任务均值的比值为 1.252（random 1.000）；真实定性视频来自 LIBERO 仿真，未部署到实体机器人。'
+    ],note:'仅为 LIBERO 仿真 mini(100) 筛选结果，不等于 400 回合正式评测；该项目未实现独立的 ODE Policy 或 Spectrally Routed Diffusion Policy，也未验证统计显著性的性能提升。',external:'https://github.com/huggingface/lerobot',externalLabel:'上游 LeRobot 项目'},
     {slug:'nbs',name:'NBS 双目基础模型重实现与多目异构三维重建系统',short:'在无官方代码及权重条件下重实现 NBS，并完成真实 4 相机 Rig 重建、误差归因和统一评测。',category:'双目/多目三维视觉',period:'研究项目',role:'技术方案设计、实验设计、评测审计与系统集成',tags:['PyTorch','DINOv2','Attention / DPT','Stereo / Multi-view'],
      bullets:[
       '基于 PyTorch 重实现 NBS（DINOv2 ViT-L/14-Registers + Local/Global Attention + DPT，356M 参数）；完成 343/344 tensors 权重映射、单视图前向数值校验 max_abs=0、位置编码 148²→296² 迁移。',
@@ -80,7 +86,7 @@ en: {
   highlights:[{value:'3 / 77',label:'Overall rank at Sichuan University · Top 4%'},{value:'16.56%',label:'Weighted dev EPE reduction in NBS same-resolution adaptation'},{value:'4 cameras',label:'End-to-end reconstruction on a real heterogeneous rig'},{value:'1,383',label:'Automated tests · 0 failed'}],
   nav:[{id:'home',label:'Home',path:'/'},{id:'projects',label:'Projects',path:'/projects/'},{id:'cv',label:'Resume & Experience',path:'/cv/'},{id:'blog',label:'Research Notes',path:'/blog/'}],
   readMore:'Read case study',allProjects:'All projects',sectionResearch:'Selected Projects',sectionIntern:'Internship',sectionEducation:'Education',sectionSkills:'Technical Skills',sectionPapers:'Manuscripts (not yet accepted)',sectionHonors:'Competitions & Honors',
-  contact:'Email',github:'GitHub',noMedia:'Images and videos are intentionally omitted for now. Reviewed visualizations and demos may be added later.',
+  contact:'Email',github:'GitHub',noMedia:'Scientific media is published with experiment conditions, limitations, and provenance when available.',
   cvIntro:'This website is adapted from my latest resume. Academic timelines, individual contributions, evaluation conditions, and manuscript submission statuses are preserved. Phone and WeChat details are intentionally excluded from the public site.',
   resumeStatus:'Class of 2027 undergraduate · Admitted to a future M.S. program (not yet enrolled)',
   education:[
@@ -97,6 +103,12 @@ en: {
     {label:'Robotics & Perception',items:['RGB-D / YOLO11','ROS / TF','EKF','Coverage Path Planning']}
   ],
   projects:[
+    {slug:'vla',name:'SmolVLA Demonstration Subset Selection & Data-efficient Fine-tuning',short:'Studying which 10% of LIBERO demonstrations to use for fine-tuning, with controlled training, fixed evaluation, audit infrastructure, and a carefully reported negative result.',category:'Embodied AI · LIBERO Simulation',period:'2026 research experiments',role:'Implemented selection, evaluation protocol, audit, and mechanism analysis; used upstream LeRobot SmolVLA as the base policy',tags:['SmolVLA','LIBERO Simulation','DINOv2','Data Selection'],bullets:[
+      'Selected 10% (168 episodes) from a 1,693-episode / 273,465-frame demonstration pool; compared random, DINOv2-state, and DINOv2-k-center subset selectors. Fine-tuning used upstream SmolVLA (450M total parameters, 99.9M trainable), 10k steps, and one 48GB GPU.',
+      'Built a fixed evaluation protocol, run registry, result QA, and paired comparison workflow. Separated custom data selection from upstream LeRobot fine-tuning; action-medoid subsets were built but not trained.',
+      'Under a mini(100) screening protocol, random (seed 1000) reached 66.0% and DINOv2-k-center (seed 1000) reached 53.0%; five arms each used 100 evaluation episodes. None of the 10 paired comparisons was significant after Holm correction.',
+      'Mechanism analysis across 40 tasks showed k-center selected visual features 1.252× as far from each task mean (random = 1.000). All video demonstrations come from LIBERO simulation, not a physical robot.'
+    ],note:'LIBERO simulation, mini(100) screening only—not the unrun 400-episode full protocol. No custom ODE Policy, spectrally routed diffusion architecture, or statistically significant improvement is claimed.',external:'https://github.com/huggingface/lerobot',externalLabel:'Upstream LeRobot project'},
     {slug:'nbs',name:'NBS Stereo Foundation Model Reimplementation & Heterogeneous Multi-view 3D Reconstruction',short:'Reimplemented NBS without public code or weights, built a four-camera reconstruction pipeline, and audited evaluation across multiple domains.',category:'Stereo & Multi-view 3D Vision',period:'Research project',role:'Technical approach, experimental design, evaluation auditing, and system integration',tags:['PyTorch','DINOv2','Attention / DPT','Stereo / Multi-view'],
      bullets:[
        'Reimplemented NBS in PyTorch without official code or released weights (DINOv2 ViT-L/14-Registers + Local/Global Attention + DPT; 356M parameters). Completed mapping of 343/344 tensors, single-view forward numerical verification (max_abs=0), and positional encoding transfer from 148² to 296².',

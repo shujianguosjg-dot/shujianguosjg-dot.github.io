@@ -1,11 +1,15 @@
 ---
 import PortfolioLayout from './PortfolioLayout.astro';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { portfolio, githubURL, siteEmail, type Locale } from '../data/portfolio';
 interface Props {lang: Locale;}
 const { lang } = Astro.props;
 const t = portfolio[lang];
 const href = (path: string) => (lang === 'en' ? '/en' : '') + path;
-const featured = t.projects.slice(0,3);
+const featured = t.projects.filter(p => p.slug === 'nbs' || p.slug === 'vla');
+const imageFor = (slug:string) => slug === 'nbs' ? 'nbs-depth-' + lang + '.webp' : slug === 'vla' ? 'vla-task-' + lang + '.webp' : '';
+const hasImage = (slug:string) => existsSync(join(process.cwd(),'public','media',imageFor(slug)));
 ---
 <PortfolioLayout lang={lang} active="home">
 <section class="pb-14">
@@ -33,6 +37,7 @@ const featured = t.projects.slice(0,3);
   <p class="leading-7 text-base-content/70 mb-7 max-w-3xl">{t.researchDesc}</p>
   <div class="grid md:grid-cols-2 gap-5">
     {featured.map(p => <a class="research-card block group" href={href('/projects/' + p.slug + '/')}>
+      {hasImage(p.slug) && <img src={"/media/"+imageFor(p.slug)} alt={p.name} class="w-full rounded-xl border border-base-300 mb-5" loading="lazy"/>}
       <p class="section-label mb-3">{p.category}</p>
       <h3 class="text-xl md:text-2xl font-bold group-hover:text-primary leading-snug">{p.name} ↗</h3>
       <p class="text-base-content/70 leading-7 mt-4">{p.short}</p>

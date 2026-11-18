@@ -22,6 +22,8 @@ jobs:
           node-version: '22'
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Unpack reviewed website media (optional)
+        run: python scripts/unpack_media.py
       - name: Build Astro
         run: npm run build
       - name: Upload static site

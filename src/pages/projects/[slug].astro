@@ -1,7 +1,7 @@
 ---
 import ProjectContent from '../../components/ProjectContent.astro';
 export function getStaticPaths() {
-  return ['surface-completion','ur-grasping','video2motion','wing-scanning'].map(slug => ({params:{slug}}));
+  return ['vla','surface-completion','ur-grasping','video2motion','wing-scanning'].map(slug => ({params:{slug}}));
 }
 const {slug} = Astro.params;
 ---
