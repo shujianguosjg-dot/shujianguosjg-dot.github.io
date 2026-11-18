@@ -5,7 +5,7 @@ zh: {
   brand: '舒建国 · 研究与工程作品集',
   field: '计算机视觉 · 双目/多目三维重建 · 机器人视觉感知',
   intro: '四川大学 2027 届本科生，已推免中国科学院自动化研究所人工智能硕士（拟于 2027 年 9 月入学）。关注双目/多目三维重建、视觉感知与机器人系统，重视可复现的实验设计和真实工程落地。',
-  availability: '成都 · 可连续全职实习 6 个月',
+  availability: '可连续全职实习 6 个月',
   eyebrow: 'Computer Vision / 3D Reconstruction / Robotics',
   primaryCTA: '查看核心项目', secondaryCTA: '简历与经历', latest: '根据最新简历整理 · 2026 年 11 月',
   research: '主要研究与项目', researchDesc: '从深度双目模型重实现，到真实多相机三维重建和机器人视觉系统。项目数据来自个人简历，注明测试范围及尚未完成的工作。',
@@ -69,7 +69,7 @@ zh: {
     {name:'《非结构化环境下基于多维效用决策的全覆盖路径规划》',venue:'在投',status:'投稿中'},
     {name:'Evidence-Graded Evaluation of Learned Planner Selection in Complete Coverage Path Planning',venue:'Neurocomputing',status:'Under review'}
   ],
-  honors:['全球校园人工智能算法精英大赛 · 国家一等奖','第十九届“挑战杯” · 国家三等奖','iCAN · 国家二等奖','国家励志奖学金（2023–2025）'],
+  honors:['全球校园人工智能算法精英大赛 — 国家一等奖','第十九届“挑战杯” — 国家三等奖','iCAN — 国家二等奖','国家励志奖学金（2023—2025）'],
   noteTitle:'研究笔记',noteDesc:'论文阅读、模型重实现、三维几何和机器人视觉实验笔记正在整理。暂不发布尚未审核的内部报告。',
   projectLabels:{overview:'项目概况',details:'关键工作与结果',role:'角色',period:'时间',status:'范围与说明',paper:'参考链接',back:'返回项目列表'},
   contactDesc:'项目交流与实习联系可通过以下邮箱发送邮件。',copyright:'基于 Astro 与 Astrofy 设计思路搭建。'
@@ -79,7 +79,7 @@ en: {
   brand:'Jianguo Shu · Research Portfolio',
   field:'Computer Vision · Stereo / Multi-view 3D Reconstruction · Robot Perception',
   intro:'I am a Class of 2027 undergraduate at Sichuan University, with a recommended admission to the M.S. program in Artificial Intelligence at the Institute of Automation, Chinese Academy of Sciences (expected enrollment: September 2027). I work on stereo and multi-view reconstruction, visual perception, and robotics, with a focus on reproducible evaluation and engineering.',
-  availability:'Chengdu, China · Available for a six-month full-time internship',
+  availability:'Available for a six-month full-time internship',
   eyebrow:'Computer Vision / 3D Reconstruction / Robotics',
   primaryCTA:'Explore projects',secondaryCTA:'Resume & experience',latest:'Based on latest resume · November 2026',
   research:'Selected Research & Projects',researchDesc:'From reproducing deep stereo models to real multi-camera reconstruction and robotic perception systems. Metrics are kept within their stated evaluation settings.',
@@ -143,7 +143,7 @@ en: {
     {name:'Complete Coverage Path Planning Based on Multi-Dimensional Utility Decision-Making in Unstructured Environments',venue:'Chinese-language manuscript',status:'Submitted / under consideration'},
     {name:'Evidence-Graded Evaluation of Learned Planner Selection in Complete Coverage Path Planning',venue:'Neurocomputing',status:'Under review'}
   ],
-  honors:['National First Prize · Global Campus AI Algorithm Elite Competition','National Third Prize · 19th Challenge Cup','National Second Prize · iCAN Competition','National Inspirational Scholarship (2023–2025)'],
+  honors:['Global Campus Artificial Intelligence Algorithm Elite Competition — National First Prize','19th “Challenge Cup” Competition — National Third Prize','iCAN Competition — National Second Prize','National Inspirational Scholarship (2023–2025)'],
   noteTitle:'Research Notes',noteDesc:'Notes on paper reading, model reimplementation, 3D geometry, and robotics experiments are being curated. Unreviewed internal reports will not be published.',
   projectLabels:{overview:'Overview',details:'Contributions & Results',role:'Role',period:'Period',status:'Scope & limitations',paper:'Related link',back:'Back to projects'},
   contactDesc:'For research collaborations or internship opportunities, please contact me by email.',copyright:'Built using Astro and Astrofy-inspired design.'
