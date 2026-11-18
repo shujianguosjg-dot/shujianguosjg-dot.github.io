@@ -1,0 +1,5 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif}html{scroll-behavior:smooth}
+.section-label{font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;opacity:.6}
+.research-card{border:1px solid #e5e7eb;border-radius:1rem;padding:1.5rem;transition:box-shadow .2s}
+.research-card:hover{box-shadow:0 12px 32px #00000012}
