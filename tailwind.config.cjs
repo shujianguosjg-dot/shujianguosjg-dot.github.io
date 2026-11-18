@@ -1,0 +1,1 @@
+module.exports = {content:['./src/**/*.{astro,html,js,ts,md,mdx}'],theme:{extend:{}},plugins:[require('daisyui')],daisyui:{themes:['light','dark'],logs:false}};
