@@ -1,0 +1,8 @@
+---
+import ProjectContent from '../../../components/ProjectContent.astro';
+export function getStaticPaths() {
+  return ['nbs','surface-completion','ur-grasping','video2motion','wing-scanning'].map(slug => ({params:{slug}}));
+}
+const {slug} = Astro.params;
+---
+<ProjectContent lang="en" slug={slug}/>

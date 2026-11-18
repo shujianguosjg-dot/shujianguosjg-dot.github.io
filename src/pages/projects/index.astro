@@ -1,12 +1,4 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-const items=[
-['NBS: No Bias Stereo','Stereo Matching · Research Reproduction','/projects/nbs/','Research reproduction and validation of deep stereo methods.'],
-['Vision-Language-Action Research','Embodied AI · Robotics','/projects/vla/','Exploring learned policies and VLA methods for embodied tasks.'],
-['Multi-view 3D Reconstruction','3D Computer Vision · Geometry','/projects/3d-reconstruction/','Visual reconstruction using heterogeneous camera observations.']
-];
+import ProjectsContent from '../../components/ProjectsContent.astro';
 ---
-<BaseLayout title="Projects | Jianguo Shu" active="projects">
-<p class="section-label">Portfolio</p><h1 class="text-4xl md:text-5xl font-bold mt-3">Research Projects</h1><p class="text-lg leading-8 text-base-content/70 mt-6 mb-10">Research-oriented implementations, investigations, and experiments. Performance numbers are shown only when verified.</p>
-<div class="grid md:grid-cols-2 gap-5">{items.map(([name,area,href,desc])=><a class="research-card group block" href={href}><p class="section-label mb-3">{area}</p><h2 class="text-2xl font-semibold group-hover:text-primary">{name} ↗</h2><p class="leading-7 text-base-content/70 mt-4">{desc}</p></a>)}</div>
-</BaseLayout>
+<ProjectsContent lang="zh"/>
