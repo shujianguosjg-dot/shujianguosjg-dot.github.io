@@ -1,0 +1,81 @@
+---
+import PortfolioLayout from './PortfolioLayout.astro';
+import { type Locale } from '../data/portfolio';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+interface Props {lang: Locale; slug: string;}
+const {lang, slug} = Astro.props;
+const zh = lang === 'zh';
+const items = {
+  nbs: [
+    {id:'nbs-depth',title:zh?'输入、预测视差、真值及误差':'Input, predicted disparity, ground truth & error',
+      caption:zh?'Middlebury-2021 chess2：EPE 2.445 px，bad@1 px 59.8%，GT 有效覆盖 91.2%。非盲诊断样本，不代表论文完整复现或 SOTA。':'Middlebury-2021 chess2: EPE 2.445 px, bad@1 px 59.8%, 91.2% valid GT coverage. Non-blind diagnostic sample; not a full-paper reproduction or SOTA claim.',
+      note:'Middlebury Stereo 2021 · Scharstein et al. · GCPR 2014'},
+    {id:'nbs-multiview',title:zh?'ETH3D 真实多视角输入与融合点云':'ETH3D multi-view inputs and fused point cloud',
+      caption:zh?'ETH3D pipes 场景：6 视角、4 个有效相机对，F1@2cm raw 0.338 / fused 0.284；融合体素 10 mm。注意此场景不同于简历中的 4 相机 terrains Rig（5 mm 体素），指标不可混用。':'ETH3D pipes: six views, four accepted pairs, F1@2cm 0.338 raw / 0.284 fused (10 mm voxel). Do not mix with the four-camera terrains rig in the CV (5 mm voxel).',
+      note:'ETH3D · Schöps et al., CVPR 2017 · CC BY-NC-SA 4.0'},
+    {id:'nbs-evaluation',title:zh?'高分辨率适配：收益与局限':'High-resolution adaptation: gains and limitations',
+      caption:zh?'1330×1932 条件下，同分辨率 zero-shot→adapted 加权 dev EPE 降低 16.56%；但相对于 966 宽基线，WMG 和 KITTI 原生尺度表现更差。':'At 1330×1932, weighted dev EPE drops 16.56% vs same-resolution zero-shot; relative to the 966-wide baseline at native resolution, WMG and KITTI still degrade.',
+      note:zh?'受控实验：同分辨率适配，不等于全面超越基线':'Controlled comparison: resolution-specific gain, not universal baseline superiority'}
+  ],
+  vla: [
+    {id:'vla-task',title:zh?'LIBERO 抽屉操作：同任务两条轨迹':'LIBERO drawer task: two rollouts',
+      caption:zh?'LIBERO 模拟环境；SmolVLA 基于两个不同的 10% 示范子集微调。相同任务和初始条件下，两条轨迹都成功，分别耗时 135 与 125 步；单次轨迹不证明速度优势。':'LIBERO simulation; SmolVLA fine-tuned on two different 10% demonstration subsets. Both rollouts succeed from matched task conditions (135 vs 125 steps); one episode does not establish a speed advantage.',
+      note:'LIBERO simulation · LeRobot / SmolVLA · qualitative case'},
+    {id:'vla-pipeline',title:zh?'10% 示范筛选与 SmolVLA 微调管线':'10% demonstration selection and SmolVLA fine-tuning',
+      caption:zh?'研究重点在示范子集选择、固定评测协议、审计与分析；使用上游 LeRobot SmolVLA (450M / 99.9M 可训练)，不是自研 VLA 模型架构。action-medoid 仅生成子集，未完成训练。':'Work focuses on demonstration subset selection, evaluation protocol, audit, and analysis. The policy is upstream LeRobot SmolVLA (450M total / 99.9M trainable), not a custom VLA architecture. Action-medoid subsets were generated but not trained.',
+      note:zh?'蓝色模块为本人实现；米色模块为上游组件':'Blue = author contribution; beige = upstream component'},
+    {id:'vla-evaluation',title:zh?'筛选协议结果与负结果解释':'Screening results and negative-result analysis',
+      caption:zh?'10% 数据预算、100 回合 mini-screening：random(seed 1000) 66.0%，DINOv2 k-center 53.0%。5 个实验臂，每臂 100 回合；10 组配对比较经 Holm 校正后均不显著，不能宣称方法优劣已确立。':'10% data budget, mini(100) screening: random (seed 1000) 66.0%, DINOv2 k-center 53.0%. Five arms, 100 episodes per arm; none of the 10 paired tests is significant after Holm correction.',
+      note:'LIBERO simulation · Wilson 95% CI · Holm-adjusted tests'}
+  ]
+};
+const rows = (items as any)[slug] ?? [];
+const mediaExists = (name:string) => existsSync(join(process.cwd(), 'public', 'media', name));
+const video = slug==='nbs' ? 'nbs-turntable.mp4' : 'vla-rollout.mp4';
+const videoNote = zh ? (slug === 'nbs' ? '点云旋转演示（ETH3D，非商业用途并署名）' : 'LIBERO 仿真 rollout 对比（两组都成功）')
+  : (slug === 'nbs' ? 'Point-cloud turntable (ETH3D, attributed noncommercial use)' : 'LIBERO simulation rollout comparison (both succeed)');
+const hasVideo = mediaExists(video);
+---
+{rows.length>0 && <section class="mt-14" aria-label={zh?'实验可视化证据':'Visual evidence'}>
+  <div class="mb-7">
+    <p class="section-label">{zh?'精选实验可视化':'Selected research evidence'}</p>
+    <h2 class="text-2xl md:text-3xl font-bold mt-3">{zh?'实验结果与真实系统展示':'Experiments and system demonstration'}</h2>
+    <p class="text-base-content/70 mt-3 leading-7">{zh?'以下图示保留真实实验结果，并标注必要的实验条件、指标限制与第三方来源。':'These figures retain the reported measurements, protocol qualifications, and attribution to third-party sources.'}</p>
+  </div>
+  <div class="space-y-9">
+  {rows.map((f:any, i:number) => {
+    const filename = f.id + '-' + lang + '.webp';
+    const exists = mediaExists(filename);
+    return <figure class="overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm">
+      <div class="flex items-center justify-between gap-4 px-5 sm:px-7 pt-6">
+        <div><p class="section-label">{slug.toUpperCase()} — {String(i+1).padStart(2,'0')}</p><h3 class="text-lg md:text-xl font-bold mt-2">{f.title}</h3></div>
+      </div>
+      <div class="mx-3 sm:mx-5 mt-5 bg-white rounded-xl overflow-hidden border border-base-300">
+        {exists ?
+        <a href={'/media/'+filename} target="_blank" rel="noopener noreferrer" aria-label={zh?'查看完整图片':'Open full image'}>
+          <img src={'/media/'+filename} loading="lazy" decoding="async" class="w-full h-auto" alt={f.title} width="1600"/>
+        </a> :
+        <div class="min-h-[220px] sm:min-h-[310px] grid place-items-center p-8 text-center bg-base-200 text-base-content/65"><p>{zh?'可视化素材已审核，等待上传网站媒体包。':'Figure ready; awaiting media upload.'}<br/><span class="text-sm opacity-70">{f.id.toUpperCase()}</span></p></div>}
+      </div>
+      <figcaption class="px-5 sm:px-7 py-6"><p class="leading-7 text-base-content/80">{f.caption}</p><p class="text-xs text-base-content/50 mt-3">{f.note}</p></figcaption>
+    </figure>;
+  })}
+  </div>
+  <section class="mt-9 rounded-2xl bg-base-200/60 p-5 sm:p-7">
+    <h3 class="text-xl font-bold mb-4">{zh?'短视频演示':'Short demonstration'}</h3>
+    {hasVideo ?
+      <video class="w-full rounded-lg bg-black" src={'/media/'+video} preload="none" playsinline controls muted></video> :
+      <div class="text-sm opacity-70">{zh?'视频已压缩，等待上传媒体包。':'Compressed video awaiting media upload.'}</div>}
+    <p class="text-sm text-base-content/70 mt-4">{videoNote}</p>
+  </section>
+  <div class="mt-7 text-sm text-base-content/65 leading-7">
+    {slug === 'nbs' ? <>
+      <p>{zh?'数据署名：Middlebury Stereo Dataset（2021）与 ETH3D（CC BY-NC-SA 4.0）。ETH3D 的非商业与相同方式共享条件需遵守；求职作品集场景如有疑义，应先获得许可。':'Attribution: Middlebury Stereo Dataset (2021) and ETH3D (CC BY-NC-SA 4.0). Comply with noncommercial/share-alike terms; seek permission if the portfolio use is considered promotional.'}</p>
+      <p class="mt-2"><a class="link link-primary" href="https://vision.middlebury.edu/stereo/data/" target="_blank" rel="noopener noreferrer">Middlebury</a> · <a class="link link-primary" href="https://eth3d.ethz.ch/" target="_blank" rel="noopener noreferrer">ETH3D</a></p>
+    </> : <>
+      <p>{zh?'模拟基准与上游模型署名：LIBERO / LeRobot SmolVLA。上述结果仅对应 mini(100) 筛选协议；并非真实机器人结果，也不是显著性胜出声明。':'Benchmark and upstream model: LIBERO / LeRobot SmolVLA. Results are from the mini(100) screening protocol, not real-robot deployment or a statistically significant win.'}</p>
+      <p class="mt-2"><a class="link link-primary" href="https://github.com/Lifelong-Robot-Learning/LIBERO" target="_blank" rel="noopener noreferrer">LIBERO</a> · <a class="link link-primary" href="https://github.com/huggingface/lerobot" target="_blank" rel="noopener noreferrer">LeRobot</a></p>
+    </>}
+  </div>
+</section>}
